@@ -53,10 +53,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div id="logo">
             <span class="logo-text">EC</span>
         </div>
-        <a href="home.php">Home</a>
-        <a href="profile.php">Profile</a>
-        <a href="job.php">Jobs</a>
-        <a href="about.php">About Us</a>
+        <a href="adminhome.php">Home</a>
+        <a href="adminfind.php">Applicants</a>
+        <a href="adminapplicants.php">Forms</a>
+        <a href="adminabout.php">About Us</a>
         <a href="logout.php" class="move-right">Log Out</a>
         <span class="move-right"><?php echo $user->get_user_lastname($user_id) . ', ' . $user->get_user_firstname($user_id); ?>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;</span>
     </div>

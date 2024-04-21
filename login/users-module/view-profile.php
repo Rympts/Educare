@@ -1,4 +1,4 @@
-
+<br><br><br>
 <div id="form-block">
 <form method="POST" action="processes/process.user.php?action=update" enctype="multipart/form-data">
 
@@ -11,16 +11,13 @@
 <br>
             <label for="lname">Last Name</label>
             <input type="text" id="lname" class="input" name="lastname" value="<?php echo $user->get_user_lastname($id);?>" placeholder="Your last name..">
-
-
-
-            <br><label for="access">Position</label></br>
-            
-            <select id="access" name="access">
-                <option value="Teacher" <?php if($user->get_user_access($id) == "Teacher"){ echo "selected";};?>>Teacher</option>
-                <option value="Masters Teacher" <?php if($user->get_user_access($id) == "Masters Teacher"){ echo "selected";};?>>Masters Teacher</option>
-                <option value="Senior Teacher" <?php if($user->get_user_access($id) == "Senior Teacher"){ echo "selected";};?>>Senior Teacher</option>
-                <option value="Teacher1/2/3" <?php if($user->get_user_access($id) == "Teacher1/2/3"){ echo "selected";};?>>Teacher1/2/3</option>
+            <label for="access">Position</label></br>
+                
+            <select id="position" name="position">
+                <option value="Teacher" <?php if($user->get_user_position($id) == "Teacher"){ echo "selected";};?>>Teacher</option>
+                <option value="Masters Teacher" <?php if($user->get_user_position($id) == "Masters Teacher"){ echo "selected";};?>>Masters Teacher</option>
+                <option value="Senior Teacher" <?php if($user->get_user_position($id) == "Senior Teacher"){ echo "selected";};?>>Senior Teacher</option>
+                <option value="Teacher1/2/3" <?php if($user->get_user_position($id) == "Teacher1/2/3"){ echo "selected";};?>>Teacher1/2/3</option>
               </select>
               <label for="dob">Date of Birth</label>
             <input type="date" id="dob" name="dob" value="<?php echo $user->get_user_dob($id);?>">
@@ -88,19 +85,25 @@
             <!-- Add Skills -->
             <label for="skills">Skills</label>
             <input type="text" id="skills" name="skills" value="<?php echo $user->get_user_skills($id);?>" placeholder="Your skills..">
-            <br>
 
-            <label for="status">Account Status</label>
-            <select id="status" name="status" disabled>
-              <option <?php if($user->get_user_status($id) == "0"){ echo "selected";};?>>Deactivated</option>
-              <option <?php if($user->get_user_status($id) == "1"){ echo "selected";};?>>Active</option>
-            </select>
-            <label for="email">Email</label>
-            <input type="email" id="email" class="input" name="email" disabled value="<?php echo $user->get_user_email($id);?>" placeholder="Your email..">
-                        
+
+            <br>
             <input type="hidden" id="userid" name="userid" value="<?php echo $id;?>"/>
-            <a href="#">Change Email</a> | 
-            <a href="#">Change Password</a> | 
+            <a href="#"></a>  
+            <a href="#"></a>  
+            <?php
+            if($user->get_user_status($id) == "1"){
+              ?>
+                <a href="#"></a>
+              <?php
+            }else{
+            ?>
+                <a href="#"></a>
+            <?php
+            }
+            ?>
+
+            
         </div>
     
         <div id="button-block">

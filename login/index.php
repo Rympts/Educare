@@ -17,7 +17,7 @@ $hideHeader = ($page == 'profile') ? true : false;
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Your Application Name</title>
+    <title>Update User</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,12 +29,16 @@ $hideHeader = ($page == 'profile') ? true : false;
 <body class="home">
 <div id="wrapper">
     <div id="menu">
-        <a href="index.php">Home</a>
-        <a href="profile.php">Profile</a>
-        <a href="find.php">Find Teacher</a>
-        <a href="about.php">About Us</a>
+    <div id="logo">
+        <span class="logo-text">EC</span>
+    </div>
+    <a href="adminhome.php">Home</a>
+        <a href="adminfind.php">Applicants</a>
+        <a href="adminapplicants.php">Forms</a>
+        <a href="adminabout.php">About Us</a>
         <a href="logout.php" class="move-right">Log Out</a>
         <span class="move-right"><?php echo $user->get_user_lastname($user_id) . ', ' . $user->get_user_firstname($user_id); ?>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;</span>
+</div>
     </div>
 
     <div id="content">
@@ -52,7 +56,7 @@ $hideHeader = ($page == 'profile') ? true : false;
                 require_once 'module-folder';
                 break;
             default:
-                require_once 'main.php';
+                require_once '';
                 break;
         }
         ?>

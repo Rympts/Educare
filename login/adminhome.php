@@ -17,7 +17,7 @@ $hideHeader = ($page == 'profile') ? true : false;
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Educare Home Page</title>
+    <title>Home</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,19 +31,19 @@ $hideHeader = ($page == 'profile') ? true : false;
 
 <body class="home specific-home">
 <div id="wrapper">
-<div id="menu">
+    <div id="menu">
 
-<div id="logo">
-        <span class="logo-text">EC</span>
-    </div>
-    <a href="home.php">Home</a>
-    <a href="profile.php">Profile</a>
-    <a href="job.php">Jobs</a>
-    <a href="about.php">About Us</a>
-    <a href="logout.php" class="move-right">Log Out</a>
-    <span class="move-right"><?php echo $user->get_user_lastname($user_id) . ', ' . $user->get_user_firstname($user_id); ?>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;</span>
-</div>
-<br><br>
+    <div id="logo">
+            <span class="logo-text">EC</span>
+        </div>
+        <a href="adminhome.php">Home</a>
+        <a href="adminfind.php">Applicants</a>
+        <a href="adminapplicants.php">Forms</a>
+        <a href="adminabout.php">About Us</a>
+        <a href="logout.php" class="move-right">Log Out</a>
+        <span class="move-right"><?php echo $user->get_user_lastname($user_id) . ', ' . $user->get_user_firstname($user_id); ?>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;</span>
+        </div>
+        <br><br>
 <br><br>
 <br>
     <div id="content">
@@ -57,8 +57,7 @@ Empowering educators to find their perfect match. Apply for teaching positions a
 
 
 </p>
-    
-        
+
     </div>
     
 </div>

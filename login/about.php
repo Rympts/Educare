@@ -14,53 +14,52 @@ if(!$user->get_session()){
 $user_id = $user->get_user_id($_SESSION['user_email']);
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Your Application Name</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>About Us - EduCare</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Assistant&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/custom.css?<?php echo time();?>">
-    
-    <body class="home">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/custom.css?<?php echo time(); ?>">
+</head>
+<body class="home">
     <div id="wrapper">
-    <div id="menu"> 
-
-    <div id="logo">
-            <span class="logo-text">EC</span>
-        </div>
+        <div id="menu">
+            <div id="logo">
+                <span class="logo-text">EC</span>
+            </div>
             <a href="home.php">Home</a>
             <a href="profile.php">Profile</a>
-            <a href="find.php">Find Teacher</a>
-            <a href="about.php">About Us</a>
+            <a href="job.php">Jobs</a>
+            <a href="about.php" class="active">About Us</a>
             <a href="logout.php" class="move-right">Log Out</a>
             <span class="move-right"><?php echo $user->get_user_lastname($user_id) . ', ' . $user->get_user_firstname($user_id); ?>&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;</span>
         </div>
-        
         <div id="about-us-content">
-        <h2>I. Introduction</h2>
-        <p>EduCare is an online platform devoted to creating healthy, balanced surroundings for education. We are aware of the growing problem of teacher shortages and how they affect both new and inexperienced teachers as well as schools. By acting as a bridge between schools looking for high-performing teachers and committed individuals starting their teaching careers, we fill the gap.</p>
-
-        <h2>Mission</h2>
-        <p>Our primary goal is to inspire educators and schools. We provide schools access to a wide range of qualified educators, helping them to find people who can really succeed in their particular setting. At the same time, we give brand-new and inexperienced educators the knowledge, tools, and connections they need to successfully navigate their careers.</p>
-
-        <h2>Vision</h2>
-        <p>Our vision is to create an energetic atmosphere where professionals and schools can find their ideal fit. In a smooth and fair environment, new educators find their footing in supportive schools, and experienced teachers find chances that are in line with their worth and areas of competence.</p>
-
-        <h2>Global Presence</h2>
-        <p>While we currently focus on helping teachers and schools in your area, we hope to eventually reach a worldwide audience. We think that possibilities to match committed instructors with appropriate settings can be found wherever.</p>
-
-        <h2>Products & Services</h2>
-        <p>For schools: We provide a comprehensive search function to locate approved applicants according to particular standards, credentials, and educational preferences.</p>
-
-        <p>For Teachers, we provide individualized career counseling, access to relevant job postings, chances for mentorship, and resources to promote professional development. We also give them a stage on which to display their unique accomplishments and skills.</p>
-
-        <p>By joining EduCare, you become part of a community that values education, collaboration, and growth. Let's bridge the gap and empower every educator to thrive!</p>
+            <section>
+                <h2>I. Introduction</h2>
+                <p>EduCare is an online platform dedicated to fostering a healthy, balanced educational environment...</p>
+            </section>
+            <section>
+                <h2>Mission</h2>
+                <p>Our primary goal is to inspire educators and schools. We offer schools access to a diverse pool of qualified educators...</p>
+            </section>
+            <section>
+                <h2>Vision</h2>
+                <p>We envision creating an energetic atmosphere where professionals and schools find their ideal fit...</p>
+            </section>
+            <section>
+                <h2>Global Presence</h2>
+                <p>While currently focused on local support, our long-term vision is to reach a global audience...</p>
+            </section>
+            <section>
+                <h2>Products & Services</h2>
+                <p><strong>For Schools:</strong> We provide a comprehensive search function to locate approved applicants...</p>
+                <p><strong>For Teachers:</strong> We offer personalized career counseling, access to relevant job postings...</p>
+            </section>
+        </div>
     </div>
-    </div>
-
-    
 </body>
 </html>

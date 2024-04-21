@@ -17,10 +17,9 @@ switch ($action) {
         delete_user();
         break;
     default:
-        // Handle invalid action or redirect to a common page
+      
         break;
 }
-
 function create_new_user()
 {
     $user = new User();
@@ -57,7 +56,20 @@ function create_new_user()
         header('location: ../index.php?page=settings&subpage=users&action=profile&id=' . $id);
     }
 }
+function delete_user()
+{
+    $user = new User();
+    $user_id = isset($_GET['id']) ? $_GET['id'] : '';
+    $result = $user->delete_user($user_id);
 
+    if ($result) {
+  
+        header('location: ../adminfind.php?page=settings&subpage=users');
+    } else {
+ 
+        echo "Deletion failed!";
+    }
+}
 function update_user()
 {
     $user = new User();
@@ -83,14 +95,13 @@ function update_user()
     $profile_image = handle_profile_image_upload();
 
     $result = $user->update_user(
-        $lastname, $firstname, $access, $dob, $sex, $age, $contact_number, $marital_status, $address, $religion, $zip_code, $application, $skills, $career_history, $position, $cover_letter, $user_id, $profile_image
+        $lastname, $firstname, $access, $dob, $sex, $age, $contact_number, $marital_status, $address, $religion, $zip_code, $application, $skills, $career_history, $position, $cover_letter, $user_id,
     );
 
     if ($result) {
         header('location: ../index.php?page=settings&subpage=users&action=profile&id=' . $user_id);
     }
 }
-
 function handle_profile_image_upload()
 {
     if ($_FILES['profile_image']['error'] == UPLOAD_ERR_OK) {
@@ -106,27 +117,3 @@ function handle_profile_image_upload()
     }
 }
 
-function deactivate_user()
-{
-    $user = new User();
-    $user_id = $_POST['userid'];
-    $result = $user->deactivate_user($user_id);
-    if ($result) {
-        header('location: ../index.php?page=settings&subpage=users&action=profile&id=' . $user_id);
-    }
-}
-
-function delete_user()
-{
-    $user = new User();
-    $user_id = isset($_GET['id']) ? $_GET['id'] : '';
-
-    // Validate $user_id if needed
-
-    $result = $user->delete_user($user_id);
-    if ($result) {
-        header('location: ../index.php?page=settings&subpage=users&message=success');
-    } else {
-        header('location: ../error.php?message=failed');
-    }
-}

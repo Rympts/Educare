@@ -17,7 +17,10 @@ class User {
 		$now = new DateTime('now', new DateTimeZone('Asia/Manila'));
 		$nowFormatted = $now->format('Y-m-d H:i:s');
 	
-		// Insert new user into the database with plain text password
+		// Hash the password before storing it in the database
+		$hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+		// Insert new user into the database with hashed password
 		$sql = "INSERT INTO tbl_users 
 				(user_email, user_password, user_lastname, user_firstname, user_access, 
                     user_dob, user_sex, user_age, user_contact_number, user_marital_status, 
@@ -28,14 +31,35 @@ class User {
 	
 		$stmt = $this->conn->prepare($sql);
 	
-		$stmt->execute([$email, $password, $lastname, $firstname, $access, $dob, $sex, $age, $contact_number,
+		$stmt->execute([$email, $hashed_password, $lastname, $firstname, $access, $dob, $sex, $age, $contact_number,
 		$marital_status, $address, $religion, $zip_code, $application, $skills,
 		$career_history, $position, $cover_letter, $profile_image,
 		$nowFormatted, $nowFormatted, 1]);
 	
 		return true;
 	}
-	
+
+public function new_admin($email, $password, $firstname, $lastname) {
+    // Setting Timezone for DB
+    $now = new DateTime('now', new DateTimeZone('Asia/Manila'));
+    $nowFormatted = $now->format('Y-m-d H:i:s');
+
+    // Hash the password before storing it in the database
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    // Insert new admin into the database with hashed password
+    $sql = "INSERT INTO tbl_users 
+            (user_email, user_password, user_lastname, user_firstname, user_access, 
+                user_date_added, user_time_added, user_status) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+    $stmt = $this->conn->prepare($sql);
+
+    $stmt->execute([$email, $hashed_password, $lastname, $firstname, 'Admin',
+        $nowFormatted, $nowFormatted, 1]);
+
+    return true;
+}
 
 	public function update_user($lastname, $firstname, $access, $dob, $sex, $age, $contact_number, $marital_status, $address, $religion, $zip_code, $application, $skills, $career_history, $position, $cover_letter, $id) {
 
@@ -114,7 +138,7 @@ class User {
 }
 
 	public function list_users(){
-		$sql="SELECT * FROM tbl_users";
+		$sql="SELECT * FROM tbl_users WHERE user_access != 'Admin'";
 		$q = $this->conn->query($sql) or die("failed!");
 		while($r = $q->fetch(PDO::FETCH_ASSOC)){
 		$data[]=$r;
@@ -127,18 +151,46 @@ class User {
 }
 
 public function profile_image($user_id, $profile_image) {
-    $sql = "UPDATE tbl_users SET user_profile_image = :profile_image WHERE user_id = :user_id";
-    $stmt = $this->conn->prepare($sql);
-    $stmt->execute(['profile_image' => $profile_image, 'user_id' => $user_id]);
-}
-function get_user_profile($id) {
-    $sql = "SELECT * FROM tbl_users WHERE user_id = :id";
-    $q = $this->conn->prepare($sql);
-    $q->execute(['id' => $id]);
-    $user_profile = $q->fetch(PDO::FETCH_ASSOC);
-    return $user_profile;
+    try {
+        $sql = "UPDATE tbl_users SET user_profile_image = :profile_image WHERE user_id = :user_id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':profile_image', $profile_image, PDO::PARAM_STR);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->execute();
+    } catch (PDOException $e) {
+        // Handle the error (log it, display a message, etc.)
+        echo "Error updating profile image: " . $e->getMessage();
+    }
 }
 
+public function get_user_profile($id) {
+    try {
+        $sql = "SELECT * FROM tbl_users WHERE user_id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $user_profile = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $user_profile;
+    } catch (PDOException $e) {
+        // Handle the error (log it, display a message, etc.)
+        echo "Error retrieving user profile: " . $e->getMessage();
+        return false; // Return false to indicate an error
+    }
+}
+public function delete_submission($fileToDelete) {
+    $sql = "DELETE FROM user_submissions WHERE file_name = :fileToDelete";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bindParam(':fileToDelete', $fileToDelete, PDO::PARAM_STR);
+
+    try {
+        $stmt->execute();
+        return true; // Return true to indicate success
+    } catch (PDOException $e) {
+        // Handle the error (log it, display a message, etc.)
+        echo "Error deleting submission: " . $e->getMessage();
+        return false; // Return false to indicate an error
+    }
+}
 	function get_user_id($email){
 		$sql="SELECT user_id FROM tbl_users WHERE user_email = :email";	
 		$q = $this->conn->prepare($sql);
@@ -196,16 +248,20 @@ function get_user_profile($id) {
 		}
 	}
 	public function check_login($email, $password) {
-        $sql = "SELECT count(*) FROM tbl_users WHERE user_email = :email AND user_password = :password"; 
+        // Retrieve hashed password from the database based on user's email
+        $sql = "SELECT user_password FROM tbl_users WHERE user_email = :email"; 
         $q = $this->conn->prepare($sql);
-        $q->execute(['email' => $email, 'password' => $password]);
-        $number_of_rows = $q->fetchColumn();
+        $q->execute(['email' => $email]);
+        $stored_hashed_password = $q->fetchColumn();
 
-        if ($number_of_rows == 1) {
+        // Verify the entered plaintext password against the stored hashed password
+        if (password_verify($password, $stored_hashed_password)) {
+            // Passwords match, grant access
             $_SESSION['login'] = true;
             $_SESSION['user_email'] = $email;
             return true;
         } else {
+            // Passwords do not match, deny access
             return false;
         }
     }
@@ -311,7 +367,7 @@ function get_user_profile($id) {
         $user_cover_letter = $q->fetchColumn();
         return $user_cover_letter;
     }
-	public function delete_user($user_id) {
+    public function delete_user($user_id) {
         $sql = "DELETE FROM tbl_users WHERE user_id = :user_id";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
@@ -320,7 +376,7 @@ function get_user_profile($id) {
             $stmt->execute();
             return true;
         } catch (PDOException $e) {
-            // Handle the exception (e.g., log it, display an error message)
+
             return false;
         }
     }

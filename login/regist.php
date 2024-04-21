@@ -45,7 +45,7 @@ if (isset($_POST['submit'])) {
 <body background="background1.jpg">
     <div id="header_login">
         <center><h1>EduCare</h1>
-    </div>
+    </div>  
     <br>
     <div id="form-block">
         <form method="POST" action="" name="registration">
@@ -64,7 +64,6 @@ if (isset($_POST['submit'])) {
 
                 <label for="access">Position</label>
                 <select id="access" name="access">
-                    <option value="Admin">Admin</option>
                     <option value="Teacher">Teacher</option>
                 </select>
 
@@ -90,7 +89,7 @@ if (isset($_POST['submit'])) {
                 </select>
 
                 <label for="address">Address</label>
-                <textarea id="address" name="address" placeholder="Your address.."></textarea>
+                <input id="address" name="address" placeholder="Your address.."></input>
 
                 <label for="religion">Religion</label>
                 <input type="text" id="religion" name="religion" placeholder="Your religion..">
@@ -120,8 +119,10 @@ if (isset($_POST['submit'])) {
 
                 <label for="skills">Skills</label>
                 <input type="text" id="skills" name="skills" placeholder="Your skills..">
+                <br>
 
                 <input type="submit" name="submit" value="Register"/>
+                <br><br>
                 <a href="Login.php" class="button">Login</a>
             </div>
         </form>

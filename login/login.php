@@ -3,6 +3,7 @@
 	include_once 'classes/class.user.php';
 
 	$user = new User();
+	
 	if($user->get_session()){
 		header("location: home.php");
 	}
@@ -22,7 +23,7 @@
 	<!DOCTYPE html>
 	<html>
 	<head>
-		<title>EduCare</title>
+		<title>Log In</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,12 +37,13 @@
 	<body>
 	<div id="brand-block">
 		<center>
-
-		<h1 class="eduCareHeading">EduCare</h1>
+<br><br><br><br>
+		<h1 class="eduCareHeading">WELCOME TEACHER</h1>
 
 	</div><center>
+	<br><br><br><br><br><br><br>
 	<div id="login-block">
-		<h3>Please login</h3>
+		<h2>Please login</h2>
 		<form method="POST" action="" name="login">
 		<div>
 			<input type="email" class="input" required name="useremail" placeholder="Valid E-mail"/>
@@ -54,7 +56,6 @@
 		</div>
 		<div><br><center>
 			<a href="regist.php" class="button" >Registration</a>
-			
 		</div>
 		<div>
 
